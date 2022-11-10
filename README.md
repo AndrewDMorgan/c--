@@ -37,17 +37,22 @@ If you comment on a print and add spaces before it the spaces will be rendered s
 
 ## Logic
 
- - <  [address 1] [address 2]     checks address 1 <  address 2, next line skipped if false
- - \>  [address 1] [address 2]     checks address 1 >  address 2, next line skipped if false
- - == [address 1] [address 2]     checks address 1 == address 2, next line skipped if false
- - != [address 1] [address 2]     checks address 1 != address 2, next line skipped if false
- - <= [address 1] [address 2]     checks address 1 <= address 2, next line skipped if false
- - \>= [address 1] [address 2]     checks address 1 >= address 2, next line skipped if false
- - ++ [address 1]                 adds 1 to the value at the address
- - -- [address 1]                 subs 1 from the value at the address
- - += [address 1] [address 2]     adds the value at address 2 to the value at address 1
- - -= [address 1] [address 2]     subs the value at address 2 from the value at address 1
- - *= [address 1] [address 2]     mults the value at address 1 and 2 together
+ - <  [address 1] [address 2]                checks address 1 <  address 2, next line skipped if false
+ - \>  [address 1] [address 2]               checks address 1 >  address 2, next line skipped if false
+ - == [address 1] [address 2]                checks address 1 == address 2, next line skipped if false
+ - &= [num skip] [address 1] [address 2]     checks address 1 == address 2, next line skipped if false
+ - != [address 1] [address 2]                checks address 1 != address 2, next line skipped if false
+ - <= [address 1] [address 2]                checks address 1 <= address 2, next line skipped if false
+ - \>= [address 1] [address 2]               checks address 1 >= address 2, next line skipped if false
+ - ++ [address 1]                            adds 1 to the value at the address
+ - -- [address 1]                            subs 1 from the value at the address
+ - += [address 1] [address 2]                adds the value at address 2 to the value at address 1
+ - -= [address 1] [address 2]                subs the value at address 2 from the value at address 1
+ - *= [address 1] [address 2]                mults the value at address 1 and 2 together
+
+## Other Funcs
+
+- getRand [min] [max]     sets active to a random value between the min and max (or at the values)
 
 # Other
 
