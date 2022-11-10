@@ -8,6 +8,7 @@ c-- is a very interesting language. Like how c++ means c but 1 better, c-- means
  * Loops & stuff using the goto (based on line number)
  * Lists & list operators
  * Comments
+ * Usr input
  * Brain damage of course too
 
 # Commands
@@ -18,35 +19,35 @@ If you comment on a print and add spaces before it the spaces will be rendered s
 
 ## General
 
-set    [address] [value]      sets the value at the adress to the value inputed
-setAdd [address] [address]    sets the value at the adress to the value at the address
-get    [address]              sets "active" to the value (put active in code to acess)
-goto   [line]                 jumps to the line
-in     [address]              assigns the inputted value (by the usr) to the address
-print  [text]                 prints a line of text (can be multiple words but to use active just put active)
-printl [text]                 same as print but adds a return (helpful for when using active)
+ - set    [address] [value]      sets the value at the adress to the value inputed
+ - setAdd [address] [address]    sets the value at the adress to the value at the address
+ - get    [address]              sets "active" to the value (put active in code to acess)
+ - goto   [line]                 jumps to the line
+ - in     [address]              assigns the inputted value (by the usr) to the address
+ - print  [text]                 prints a line of text (can be multiple words but to use active just put active)
+ - printl [text]                 same as print but adds a return (helpful for when using active)
 
 ## Lists
 
-newList [address]                   creates a new list
-addItem [address] [item]            adds an item
-setItem [address] [index] [add 2]   sets an item at an index
-getItme [address] [index]           gets the item at the index
-getSize [address]                   gets the size of the item
+ - newList [address]                   creates a new list
+ - addItem [address] [item]            adds an item
+ - setItem [address] [index] [add 2]   sets an item at an index
+ - getItme [address] [index]           gets the item at the index
+ - getSize [address]                   gets the size of the item
 
 ## Logic
 
-<  [address 1] [address 2]     checks address 1 <  address 2, next line skipped if false
->  [address 1] [address 2]     checks address 1 >  address 2, next line skipped if false
-== [address 1] [address 2]     checks address 1 == address 2, next line skipped if false
-!= [address 1] [address 2]     checks address 1 != address 2, next line skipped if false
-<= [address 1] [address 2]     checks address 1 <= address 2, next line skipped if false
->= [address 1] [address 2]     checks address 1 >= address 2, next line skipped if false
-++ [address 1]                 adds 1 to the value at the address
--- [address 1]                 subs 1 from the value at the address
-+= [address 1] [address 2]     adds the value at address 2 to the value at address 1
--= [address 1] [address 2]     subs the value at address 2 from the value at address 1
-*= [address 1] [address 2]     mults the value at address 1 and 2 together
+ - <  [address 1] [address 2]     checks address 1 <  address 2, next line skipped if false
+ - \>  [address 1] [address 2]     checks address 1 >  address 2, next line skipped if false
+ - == [address 1] [address 2]     checks address 1 == address 2, next line skipped if false
+ - != [address 1] [address 2]     checks address 1 != address 2, next line skipped if false
+ - <= [address 1] [address 2]     checks address 1 <= address 2, next line skipped if false
+ - \>= [address 1] [address 2]     checks address 1 >= address 2, next line skipped if false
+ - ++ [address 1]                 adds 1 to the value at the address
+ - -- [address 1]                 subs 1 from the value at the address
+ - += [address 1] [address 2]     adds the value at address 2 to the value at address 1
+ - -= [address 1] [address 2]     subs the value at address 2 from the value at address 1
+ - *= [address 1] [address 2]     mults the value at address 1 and 2 together
 
 # Other
 
