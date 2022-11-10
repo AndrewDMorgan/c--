@@ -1,15 +1,17 @@
 import time
 
+# basic global stuff to keep track of
 mem = {}
 line = 0
 active = None
 
 
-def Set(add: int, val: any):
+# setters to be used inside the lambdas
+def Set(add: any, val: any) -> None:
     global mem
     mem[add] = val
 
-def SetLine(l: int):
+def SetLine(l: int) -> None:
     global line
     line = int(l)-1  # accounting for the movement of the processor
 
@@ -17,17 +19,19 @@ def SetAct(val: any) -> None:
     global active
     active = val
 
-def SetList(add, i, item) -> None:
+def SetList(add: any, i: int, item: any) -> None:
     mem[add][i] = item
 
 
-def Int(val) -> any:
+# trys to cast an item to an int
+def Int(val: any) -> any:
     try:
         return int(val)
     except ValueError:
         return val
 
 
+# the functions that act for the tokens with args
 funcs = {
     "print": lambda txt: print(txt, end=''),
     "printl": lambda txt: print(txt),
@@ -94,133 +98,6 @@ comparing:
 
 """
 
-
-
-"""
-
-// character setup with a check for it being called mom
-
-set 2 mom
-
-printl name:
-in 0
-printl age:
-in 1
-
-== 0 2
-    goto 14
-
-get 0
-print The characters name is 
-printl active
-
-get 1
-print The characters health is 
-printl active
-
-goto 15
-
-printl hi mom!!
-
-
-// moving a character based on command until the player types done
-
-set x 0  // the x
-set completeAction done
-set leftAction l
-set rightAction r
-set maxRight 10
-
-printl action (l/r, done)
-in input
-== input completeAction
-    goto 1000  // leaving the loop
-== input leftAction
-    -- x  // moving left
-== input rightAction
-    ++ x  // moving right
-
-
-set i -1
-
-++ i
-print   
-< i x
-    goto 14
-
-get x
-set i active
-
-print []
-
-++ i
-print   
-< i maxRight
-    goto 21
-
-printl
-
-goto 4  // looping
-
-
-// list like something
-
-set i 0
-set maxDepth 1000
-
-++ i
-get i
-setAdd active i
-
-get active
-printl active
-
-< i maxDepth
-    goto 2
-
-
-
-// math thing
-
-set add +
-set sub -
-set mult *
-
-printl first value
-in 1
-printl second value
-in 2
-printl +, -, or *
-in input
-== input add
-    += 1 2
-== input sub
-    -= 1 2
-== input mult
-    *= 1 2
-
-get 1
-print Output: 
-printl active
-
-
-"""
-
-# the tokens, a token is a token name + the args in a tuple
-tokens = []
-
-# the code
-print("code >> ", end='')
-i = input()
-code = open(i).read()
-
-#code = []
-#code = ["set add +", "set sub -", "set mult *", "printl first value", "in 1", "printl second value", "in 2", "printl +, -, *", "in input", "== input add", "+= 1 2", "== input sub", "-= 1 2", "== input mult", "*= 1 2", "get 1", "print Output: ", "printl active"]
-#code = ["set 2 mom", "printl name:", "in 0", "printl age:", "in 1", "== 0 2", "goto 14", "get 0", "print The characters name is ", "printl active", "get 1", "print The characters health is ", "printl active", "goto 15", "printl Hi mom!!!"]
-#code = ["set 0 0", "set 10 done", "set 11 l", "set 12 r", "printl action (l/r, done)", "in 1", "== 1 10", "goto 10000", "== 11 1", "-- 0", "== 12 1", "++ 0", "get 0", "printl active", "goto 4"]
-#code = ["set x 0", "set completeAction done", "set leftAction l", "set rightAction r", "set maxRight 10", "printl action (l/r, done)", "in input", "== input completeAction", "goto 1000", "== input leftAction", "-- x", "== input rightAction", "++ x", "set i -1", "++ i", "print   ", "< i x", "goto 14", "get x", "set i active", "print []", "++ i", "print   ", "< i maxRight", "goto 21", "printl", "goto 4"]
-#code = ["set i 0", "set maxDepth 1000", "++ i", "get i", "setAdd active i", "get active", "printl active", "< i maxDepth", "goto 2"]
-
 # running the code
 def Runner(codeLine: str) -> None:
     global line
@@ -255,19 +132,30 @@ def Runner(codeLine: str) -> None:
         raise
 
 
+# opening the code
+print("code >> ", end='')
+i = input()
+code = open(i).read()
+
 # breaking the code into lines
 codeLinesOld = code.split("\n")
 codeLines = []
+# looping through the lines and processing them
 for l in codeLinesOld:
+    # remvoing comments
     text = l.split("//")[0]
+    # checking for empty lines
     if text != "":
+        # removing indentation
         while text[0] == " ":
             text = text[1:]
         
+        # removing end spaces except if its an if/logic token
         if text[:5] != "print":
             while text[len(text)-1] == " ":
                 text = text[:-1]
 
+        # adding the line
         codeLines.append(text)
 
 # running the code
@@ -276,6 +164,7 @@ while line < len(codeLines):
     Runner(codeLines[line])
     line += 1
 
+# getting the elapsed time to see how terrible it is
 end = time.time()
 print(f"\nCompleted in {end - start} seconds")
 
