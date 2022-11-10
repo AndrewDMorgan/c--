@@ -20,7 +20,7 @@ printl Rock, Paper, Scissors, shoot!!! (choose those exact words)
 in usrIn
 
 get botIn
-print The box chooses 
+print The bot chooses 
 printl active
 
 // checking who won/if a tie happened, a great example of the use of the logic symbol &=
