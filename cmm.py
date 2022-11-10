@@ -1,4 +1,4 @@
-import time
+import time, random
 
 # basic global stuff to keep track of
 mem = {}
@@ -42,6 +42,7 @@ funcs = {
     "<" : lambda addL, addR: int(mem[Int(addL)]) <  int(mem[Int(addR)]),
     ">" : lambda addL, addR: int(mem[Int(addL)]) >  int(mem[Int(addR)]),
     "==": lambda addL, addR: Int(mem[Int(addL)]) == Int(mem[Int(addR)]),
+    "&=": lambda v, addL, addR: Int(mem[Int(addL)]) == Int(mem[Int(addR)]),
     "!=": lambda addL, addR: Int(mem[Int(addL)]) != Int(mem[Int(addR)]),
     "<=": lambda addL, addR: int(mem[Int(addL)]) <= int(mem[Int(addR)]),
     ">=": lambda addL, addR: int(mem[Int(addL)]) >= int(mem[Int(addR)]),
@@ -55,7 +56,8 @@ funcs = {
     "getItem": lambda name, index: SetAct(mem[Int(name)][Int(index)]),
     "addItem": lambda name, item: mem[Int(name)].append(Int(item)),
     "getSize": lambda name: SetAct(len(mem[Int(name)])),
-    "setItem": lambda name, index, item: SetList(Int(name), Int(index), mem[Int(item)])
+    "setItem": lambda name, index, item: SetList(Int(name), Int(index), mem[Int(item)]),
+    "getRand": lambda min, max: SetAct(random.randint(Int(min), Int(max)))
 }
 
 """
@@ -74,7 +76,7 @@ in     [address]              assigns the inputted value (by the usr) to the add
 print  [text]                 prints a line of text (can be multiple words but to use active just put active)
 printl [text]                 same as print but adds a return (helpful for when using active)
 
-lists
+lists:
 
 newList [address]                   creates a new list
 addItem [address] [item]            adds an item
@@ -84,17 +86,22 @@ getSize [address]                   gets the size of the item
 
 comparing:
 
-<  [address 1] [address 2]     checks address 1 <  address 2, next line skipped if false
->  [address 1] [address 2]     checks address 1 >  address 2, next line skipped if false
-== [address 1] [address 2]     checks address 1 == address 2, next line skipped if false
-!= [address 1] [address 2]     checks address 1 != address 2, next line skipped if false
-<= [address 1] [address 2]     checks address 1 <= address 2, next line skipped if false
->= [address 1] [address 2]     checks address 1 >= address 2, next line skipped if false
-++ [address 1]                 adds 1 to the value at the address
--- [address 1]                 subs 1 from the value at the address
-+= [address 1] [address 2]     adds the value at address 2 to the value at address 1
--= [address 1] [address 2]     subs the value at address 2 from the value at address 1
-*= [address 1] [address 2]     mults the value at address 1 and 2 together
+<  [address 1] [address 2]            checks address 1 <  address 2, next line skipped if false
+>  [address 1] [address 2]            checks address 1 >  address 2, next line skipped if false
+== [address 1] [address 2]            checks address 1 == address 2, next line skipped if false
+&= [num if] [address 1] [address 2]   same as == but can be stacked with multiple ifs
+!= [address 1] [address 2]            checks address 1 != address 2, next line skipped if false
+<= [address 1] [address 2]            checks address 1 <= address 2, next line skipped if false
+>= [address 1] [address 2]            checks address 1 >= address 2, next line skipped if false
+++ [address 1]                        adds 1 to the value at the address
+-- [address 1]                        subs 1 from the value at the address
++= [address 1] [address 2]            adds the value at address 2 to the value at address 1
+-= [address 1] [address 2]            subs the value at address 2 from the value at address 1
+*= [address 1] [address 2]            mults the value at address 1 and 2 together
+
+other/random stuff:
+
+getRand [min] [max]      sets active a random value between the inputed values
 
 """
 
@@ -126,7 +133,11 @@ def Runner(codeLine: str) -> None:
             # running the command
             valid = funcs[com](*args)
             if not valid and valid != None:
-                line += 1
+                # moving until not over an if to not break anything
+                if com == "&=":
+                    line += int(args[0])
+                else:
+                    line += 1
     except Exception:
         print(f"\nError on line {line}\n{codeLines[line]}")
         raise

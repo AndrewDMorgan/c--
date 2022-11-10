@@ -1,0 +1,45 @@
+
+// setting the values
+set rock Rock
+set paper Paper
+set scissors Scissors
+
+// the values in the list to be acessed
+newList rps
+addItem rps Rock
+addItem rps Paper
+addItem rps Scissors
+
+// getting a random value
+getRand 0 2
+getItem rps active
+set botIn active
+
+// getting the users choice
+printl Rock, Paper, Scissors, shoot!!! (choose those exact words)
+in usrIn
+
+get botIn
+printl active
+
+// checking who won/if a tie happened, a great example of the use of the logic symbol &=
+== usrIn botIn
+    printl Its a tie...
+&= 2 usrIn rock
+    == botIn scissors
+        printl You won!!!
+&= 2 usrIn paper
+    == botIn rock
+        printl You won!!!
+&= 2 usrIn scissors
+    == botIn paper
+        printl You won!!!
+&= 2 botIn rock
+    == usrIn scissors
+        printl You won!!!
+&= 2 botIn paper
+    == usrIn rock
+        printl You won!!!
+&= 2 botIn scissors
+    == usrIn paper
+        printl You won!!!
