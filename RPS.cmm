@@ -20,6 +20,7 @@ printl Rock, Paper, Scissors, shoot!!! (choose those exact words)
 in usrIn
 
 get botIn
+printl Bot Chose 
 printl active
 
 // checking who won/if a tie happened, a great example of the use of the logic symbol &=
@@ -36,10 +37,10 @@ printl active
         printl You won!!!
 &= 2 botIn rock
     == usrIn scissors
-        printl You won!!!
+        printl Bot won :(
 &= 2 botIn paper
     == usrIn rock
-        printl You won!!!
+        printl Bot won :(
 &= 2 botIn scissors
     == usrIn paper
-        printl You won!!!
+        printl Bot won :(
