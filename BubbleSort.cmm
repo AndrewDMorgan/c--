@@ -1,0 +1,67 @@
+
+// the random numbers
+newList numbers
+addItem numbers 5
+addItem numbers 2
+addItem numbers 5
+addItem numbers 7
+addItem numbers 8
+addItem numbers 2
+addItem numbers 4
+addItem numbers 9
+addItem numbers 3
+
+// swapping numbers around
+set depth 0
+set maxD 100
+
+getSize numbers
+set length active
+-- length
+
+set i 0
+
+// getting the two numbers
+get i
+getItem numbers active
+set 0 active
+++ i
+get i
+getItem numbers active
+set 1 active
+-- i
+
+// checking if they should be swapped
+< 0 1
+    goto 32
+
+// swapping the numbers
+++ i
+get i
+setItem numbers active 0
+-- i
+get i
+setItem numbers active 1
+
+++ i
+< i length
+    goto 16
+
+++ depth
+
+< depth maxD
+    goto 15
+
+
+set i 0
+getSize numbers
+set maxD active
+
+get i
+getItem numbers active
+printl active
+++ i
+< i maxD
+    goto 41
+
+
