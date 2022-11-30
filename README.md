@@ -20,5 +20,12 @@ c-- is a very interesting language. Like how c++ means c but 1 better, c-- means
 
 ## Other
  - = assignment
- - More documnetation coming...
+ - call calls a function
+ - func creats a function (<0> = func)
+ - jmp jumps to a line
+ - retrn returns from a function (defining its bounds)
+ - end ends the program
 
+# Future
+
+Note sure what will become of this to be honest.
