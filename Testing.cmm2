@@ -1,0 +1,19 @@
+
+// creating a function for recursion (2x)
+<6> = func
+    // calling the print function
+    <999> = <1>
+    call <1000>
+
+    // doubling the value and calling the function
+    <1> = <1> * 2
+    call <6>
+
+    // ending the function
+    retrn
+
+
+// setting the initial value and calling the function
+<1> = 1
+call <6>
+
