@@ -1,10 +1,14 @@
 # c-- V2
-c-- is a very interesting language. Like how c++ means c but 1 better, c-- means c but a lot worse. It's an interpreted language that skips the lexer and has you type the token formated code making it very hard to understand. The commands are bellow, be warned, you brain will hurt a lot. This is a joke langauge just for fun but try to use it if you want. Run the program and input the file (be careful, you can't use \n). There is next to no error detection in the code while running and there are probably many bugs.
+c-- is a very interesting language. Like how c++ means c but 1 better, c-- means c but a lot worse. It's an interpreted language using multiple layers of proccesing. The commands are bellow, be warned, you brain will hurt a lot. This is a joke langauge just for fun but try to use it if you want. Run the program and input the file. There is next to no error detection in the code while running and there are probably many bugs.
 
 # Features
 
+The language uses new lines to identify the ends of lines (like python). It does not use indentation or brakets (although indents can help readibility), instead it uses syntaxes to mark the end of if's and functions. The language only supports int's currently. You use <> and a number to represent functions and values (when using no <> its marked as a number).
+
  * Basic variables
  * Functions + recurrsion
+ * If's and logic (standered with or, and, not, >=, ect...)
+ * Jumps to jump lines
  * Comments
  * Basic math (no order of operations)
  * Brain damage of course too
@@ -12,11 +16,15 @@ c-- is a very interesting language. Like how c++ means c but 1 better, c-- means
 # Functions
 
 ## Built-ins
- - <999> input for print
+ - <995> to <999> are for built-in parameters (995 being the first param)
  - <1000> print function
+ - <1001> sleep function (milleseconds)
 
-## Math
-- *, -, +
+## Math & Logic
+ - *, -, +
+ - ==, >=, <=, <, >
+ - not, and, or
+ - if
 
 ## Other
  - = assignment
@@ -25,6 +33,7 @@ c-- is a very interesting language. Like how c++ means c but 1 better, c-- means
  - jmp jumps to a line
  - retrn returns from a function (defining its bounds)
  - end ends the program
+ - done marks the end of an if
 
 # Future
 
@@ -33,7 +42,7 @@ Note sure what will become of this to be honest.
 
 
 # c-- V1
-c-- is a very interesting language. Like how c++ means c but 1 better, c-- means c but a lot worse. It's an interpreted language that skips the lexer and has you type the token formated code making it very hard to understand. The commands are bellow, be warned, you brain will hurt a lot. This is a joke langauge just for fun but try to use it if you want. Run the program and input the file (be careful, you can't use \n). There is next to no error detection in the code while running and there are probably many bugs.
+c-- is a very interesting language. Like how c++ means c but 1 better, c-- means c but a lot worse. It's an interpreted language that works by turning all syntaxes into built in functions with a strict layout of parameters. The commands are bellow, be warned, you brain will hurt a lot. This is a joke langauge just for fun but try to use it if you want. Run the program and input the file (be careful, you can't use \n). There is next to no error detection in the code while running and there are probably many bugs.
 
 # Features
 
