@@ -1,13 +1,21 @@
 
+
 // creating a function for recursion (2x)
 <6> = func
     // calling the print function
-    <999> = <1>
+    <995> = <1>
     call <1000>
+
+    // waiting a second
+    <995> = 250
+    call <1001>
 
     // doubling the value and calling the function
     <1> = <1> * 2
-    call <6>
+    
+    if <1> < 100
+        call <6>
+        done
 
     // ending the function
     retrn
@@ -16,4 +24,26 @@
 // setting the initial value and calling the function
 <1> = 1
 call <6>
+
+// setting <5>
+<5> = 0
+
+// call a print with a value of 99
+<995> = 99
+call <1000>
+
+// waiting a second
+<995> = 250
+call <1001>
+
+<5> = <5> + 1  // adding one to it
+
+// jumping back if <5> < 2
+if <5> <= 1
+    jmp 31
+    done
+
+// ending the program
+end
+
 

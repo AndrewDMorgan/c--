@@ -1,19 +1,30 @@
-""" code syntax:
+import time
 
+""" code syntax:
 < >           gets memory (is all global)
 =             assignment
 +             adds
 -             subtracts
 *             multiplies
+==            ==
+>=            >=
+>             >
+<             <
+<=            <=
+and           and
+or            or
+not           not
 call          calls a function
 func          creates a func
 jmp           jumps to a line
 retrn         returns to last jump
 end           ends the program
+done          ends an if
+if            an if statement
 
 <1000>        print function
-<999>         print function arg input
-
+<1001>        sleep function (milliseconds)
+<995-999>     parameters for built-ins (in order from 995 - 999)
 """
 
 # sets the line
@@ -25,7 +36,8 @@ def SetLine(newLine: int) -> None:
 
 # the memory including funcs and different types of variables (all stored as ints)
 memory = {
-    1000: lambda : print(memory[999])
+    1000: lambda : print(memory[995]),
+    1001: lambda : time.sleep(memory[995]*0.001)
 }
 
 
@@ -80,9 +92,8 @@ def ComputeMath(codeLine: list) -> str:
     for charNum, token in enumerate(codeLine):
         # reading the syntax
         
-        # checking for math (read left to right, no PANDOS)
-        if token in ["+", "-", "*"]:
-            #value = eval(f"{memory[GetAdd(codeLine[charNum - 1])]} {token} {memory[GetAdd(codeLine[charNum + 1])]}")
+        # checking for math & logic (read left to right, no PANDOS)
+        if token in ["+", "-", "*", "==", ">", "<", "<=", ">="]:
             value = eval(f"{GetVal(codeLine[charNum - 1])} {token} {GetVal(codeLine[charNum + 1])}")
             
             # removing the old values
@@ -94,9 +105,45 @@ def ComputeMath(codeLine: list) -> str:
             
             # formating beyon here
             return ComputeMath(codeLine)
-        elif token[0] == "<" and int(GetAdd(token)) in memory and codeLine[0] != "call" and codeLine[min(charNum + 1, len(codeLine) - 1)] != "=":
+        # checking for memory and subsituting in for it
+        elif len(token) > 2 and token[0] == "<" and int(GetAdd(token)) in memory and codeLine[0] != "call" and codeLine[min(charNum + 1, len(codeLine) - 1)] != "=":
             codeLine[charNum] = str(memory[int(GetAdd(token))])
             return ComputeMath(codeLine)
+
+    # returning the value after evaluating and's, or's, and not's    
+    return RunChecks(codeLine)
+
+
+# runs checks on and's, or's, and not's
+def RunChecks(codeLine: list) -> list:
+    # running through ands and ors
+    for charNum, token in enumerate(codeLine):
+        # checking for the proper tokens
+        if token in ["and", "or"]:
+            value = eval(f"{GetVal(codeLine[charNum - 1])} {token} {GetVal(codeLine[charNum + 1])}")
+            
+            # removing the old values
+            del codeLine[charNum - 1]
+            del codeLine[charNum - 1]
+            
+            # adding the new value in a simplifyed form
+            codeLine[charNum - 1] = str(value)
+            
+            # formating beyon here
+            return RunChecks(codeLine)
+        elif token == "not":
+            value = eval(f"{token} {GetVal(codeLine[charNum + 1])}")
+            
+            # removing the old values
+            del codeLine[charNum]
+            
+            # adding the new value in a simplifyed form
+            codeLine[charNum] = str(value)
+            
+            # formating beyon here
+            return RunChecks(codeLine)
+    
+    # finishing the process
     return codeLine
 
 
@@ -116,6 +163,13 @@ def ComputeMem(codeLine: list, lineNum: int) -> None:
                 line += 1  # going to the line after the retrn
             else:
                 memory[add] = int(codeLine[charNum + 1])
+        elif token == "if":
+            # checking if the if is false
+            if not eval(codeLine[charNum + 1]):
+                # jumping to the end of the if so its not run
+                while "done" not in tokenizedCode[line]:
+                    line += 1
+                line += 1  # going to the line after the done
 
 
 # running other syntaxes
@@ -139,7 +193,8 @@ def RunOther(codeLine: list) -> None:
             length = len(jmpBack) - 1
             line = jmpBack[length]
             del jmpBack[length]
-
+        elif token == "jmp":  # jumping lines
+            line = int(codeLine[charNum + 1]) - 2
 
 # running the code
 codeLine = tokenizedCode[line].copy()
