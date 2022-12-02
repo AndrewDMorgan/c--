@@ -37,7 +37,7 @@ The language uses new lines to identify the ends of lines (like python). It does
 
 # Future
 
-Note sure what will become of this to be honest.
+Note sure what will become of this to be honest. I might work on a basic ide/text editor with syntax highlighting for c-- V2 just to make it slightly more readable, I currently have a really bad terminal based one although a more graphical one would be nice (It's as easy to exit rn as vim).
 
 
 
