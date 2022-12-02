@@ -22,8 +22,8 @@ end           ends the program
 done          ends an if
 if            an if statement
 
-<1000>        print function
-<1001>        sleep function (milliseconds)
+<print>        print function
+<sleep>        sleep function (milliseconds)
 <995-999>     parameters for built-ins (in order from 995 - 999)
 """
 
@@ -36,8 +36,8 @@ def SetLine(newLine: int) -> None:
 
 # the memory including funcs and different types of variables (all stored as ints)
 memory = {
-    1000: lambda : print(memory[995]),
-    1001: lambda : time.sleep(memory[995]*0.001)
+    "print": lambda : print(memory[995]),
+    "sleep": lambda : time.sleep(memory[995]*0.001)
 }
 
 
@@ -79,10 +79,18 @@ def GetAdd(memAdd: str) -> int:
     return memAdd[:-1][1:]
 
 
+# trys to turn the value to an int, if failed keeps it as it was inputed
+def TryInt(val: any) -> any:
+    try:  # trying to return the int-ed version of the value
+        return int(val)
+    except ValueError:
+        return val  # returing the value sense its not an int
+
+
 # gets the value of an addres or number
 def GetVal(addresVal: int) -> int:
     if addresVal[0] == "<":
-        return memory[int(GetAdd(addresVal))]
+        return memory[TryInt(GetAdd(addresVal))]
     return int(addresVal)
 
 
@@ -106,8 +114,8 @@ def ComputeMath(codeLine: list) -> str:
             # formating beyon here
             return ComputeMath(codeLine)
         # checking for memory and subsituting in for it
-        elif len(token) > 2 and token[0] == "<" and int(GetAdd(token)) in memory and codeLine[0] != "call" and codeLine[min(charNum + 1, len(codeLine) - 1)] != "=":
-            codeLine[charNum] = str(memory[int(GetAdd(token))])
+        elif len(token) > 2 and token[0] == "<" and TryInt(GetAdd(token)) in memory and codeLine[0] != "call" and codeLine[min(charNum + 1, len(codeLine) - 1)] != "=":
+            codeLine[charNum] = str(memory[TryInt(GetAdd(token))])
             return ComputeMath(codeLine)
 
     # returning the value after evaluating and's, or's, and not's    
@@ -154,7 +162,7 @@ def ComputeMem(codeLine: list, lineNum: int) -> None:
     for charNum, token in enumerate(codeLine):
         # checking for memory being set
         if token == "=":
-            add = int(GetAdd(codeLine[charNum - 1]))
+            add = TryInt(GetAdd(codeLine[charNum - 1]))
             if codeLine[charNum + 1] == "func":
                 memory[add] = lambda : SetLine(lineNum)  # setting that to call the line its on
                 # jumping to the end of the function
@@ -179,7 +187,7 @@ def RunOther(codeLine: list) -> None:
     for charNum, token in enumerate(codeLine):
         if token == "call":
             # getting the address
-            add = int(GetAdd(codeLine[charNum + 1]))
+            add = TryInt(GetAdd(codeLine[charNum + 1]))
 
             # making sure the function isnt a built in one
             if add not in [1000]:
