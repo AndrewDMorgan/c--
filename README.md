@@ -17,8 +17,8 @@ The language uses new lines to identify the ends of lines (like python). It does
 
 ## Built-ins
  - <995> to <999> are for built-in parameters (995 being the first param)
- - <print> print function
- - <sleep> sleep function (milleseconds)
+ - \<print\> print function
+ - \<sleep\> sleep function (milleseconds)
 
 ## Math & Logic
  - *, -, +
