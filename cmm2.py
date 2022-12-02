@@ -43,7 +43,6 @@ memory = {
 
 # opening the code
 codeLinesOld = open(input("Program File >> ")).read().split("\n")
-codeLinesOld = []
 
 # getting the code in a better formated way
 code = []
