@@ -8,6 +8,7 @@ The language uses new lines to identify the ends of lines (like python). It does
  * Basic variables
  * Functions + recurrsion
  * If's and logic (standered with or, and, not, >=, ect...)
+ * Embedded if's and functions
  * Jumps to jump lines
  * Comments
  * Basic math (no order of operations)
