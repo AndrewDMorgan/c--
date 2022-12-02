@@ -21,8 +21,9 @@ retrn         returns to last jump
 end           ends the program
 done          ends an if
 if            an if statement
-<1000>        print function
-<1001>        sleep function (milliseconds)
+
+<print>        print function
+<sleep>        sleep function (milliseconds)
 <995-999>     parameters for built-ins (in order from 995 - 999)
 """
 
