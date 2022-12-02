@@ -21,7 +21,6 @@ retrn         returns to last jump
 end           ends the program
 done          ends an if
 if            an if statement
-
 <print>        print function
 <sleep>        sleep function (milliseconds)
 <995-999>     parameters for built-ins (in order from 995 - 999)
@@ -34,10 +33,11 @@ def SetLine(newLine: int) -> None:
     global line
     line = newLine
 
+
 # the memory including funcs and different types of variables (all stored as ints)
 memory = {
-    "print": lambda : print(memory[995]),
-    "sleep": lambda : time.sleep(memory[995]*0.001)
+    "print": lambda : print(memory["995"]),
+    "sleep": lambda : time.sleep(memory["995"]*0.001)
 }
 
 
@@ -65,13 +65,8 @@ for l in codeLinesOld:
     # adding the line
     code.append(text)
 
-
-# Gets the tokens
-def GetTokens(codeLine: str) -> list:
-    return codeLine.split(" ")
-
 # breaking the code into tokens
-tokenizedCode = [GetTokens(codeLine) for codeLine in code]
+tokenizedCode = [codeLine.split(" ") for codeLine in code]
 
 
 # gets the adress
@@ -79,18 +74,10 @@ def GetAdd(memAdd: str) -> int:
     return memAdd[:-1][1:]
 
 
-# trys to turn the value to an int, if failed keeps it as it was inputed
-def TryInt(val: any) -> any:
-    try:  # trying to return the int-ed version of the value
-        return int(val)
-    except ValueError:
-        return val  # returing the value sense its not an int
-
-
 # gets the value of an addres or number
 def GetVal(addresVal: int) -> int:
     if addresVal[0] == "<":
-        return memory[TryInt(GetAdd(addresVal))]
+        return memory[GetAdd(addresVal)]
     return int(addresVal)
 
 
@@ -114,8 +101,8 @@ def ComputeMath(codeLine: list) -> str:
             # formating beyon here
             return ComputeMath(codeLine)
         # checking for memory and subsituting in for it
-        elif len(token) > 2 and token[0] == "<" and TryInt(GetAdd(token)) in memory and codeLine[0] != "call" and codeLine[min(charNum + 1, len(codeLine) - 1)] != "=":
-            codeLine[charNum] = str(memory[TryInt(GetAdd(token))])
+        elif len(token) > 2 and token[0] == "<" and GetAdd(token) in memory and codeLine[0] != "call" and codeLine[min(charNum + 1, len(codeLine) - 1)] != "=":
+            codeLine[charNum] = str(memory[GetAdd(token)])
             return ComputeMath(codeLine)
 
     # returning the value after evaluating and's, or's, and not's    
@@ -162,22 +149,38 @@ def ComputeMem(codeLine: list, lineNum: int) -> None:
     for charNum, token in enumerate(codeLine):
         # checking for memory being set
         if token == "=":
-            add = TryInt(GetAdd(codeLine[charNum - 1]))
+            add = GetAdd(codeLine[charNum - 1])
             if codeLine[charNum + 1] == "func":
-                memory[add] = lambda : SetLine(lineNum)  # setting that to call the line its on
+                # setting that address to a jmp call to the current line
+                memory[add] = lambda : SetLine(lineNum)
+                
                 # jumping to the end of the function
-                while "retrn" not in tokenizedCode[line]:
+                exited = 1
+                while exited > 0:
                     line += 1
-                line += 1  # going to the line after the retrn
+                    if "retrn" in tokenizedCode[line]:
+                        exited -= 1
+                    elif "func" in tokenizedCode[line]:
+                        exited += 1
+                
+                # going to the line after the retrn
+                line += 1
             else:
                 memory[add] = int(codeLine[charNum + 1])
         elif token == "if":
             # checking if the if is false
             if not eval(codeLine[charNum + 1]):
                 # jumping to the end of the if so its not run
-                while "done" not in tokenizedCode[line]:
+                exited = 1
+                while exited > 0:
                     line += 1
-                line += 1  # going to the line after the done
+                    if "done" in tokenizedCode[line]:
+                        exited -= 1
+                    elif "if" in tokenizedCode[line]:
+                        exited += 1
+                
+                # going to the line after the done
+                line += 1
 
 
 # running other syntaxes
@@ -187,7 +190,7 @@ def RunOther(codeLine: list) -> None:
     for charNum, token in enumerate(codeLine):
         if token == "call":
             # getting the address
-            add = TryInt(GetAdd(codeLine[charNum + 1]))
+            add = GetAdd(codeLine[charNum + 1])
 
             # making sure the function isnt a built in one
             if add not in [1000]:
@@ -204,16 +207,24 @@ def RunOther(codeLine: list) -> None:
         elif token == "jmp":  # jumping lines
             line = int(codeLine[charNum + 1]) - 2
 
+
 # running the code
 codeLine = tokenizedCode[line].copy()
 while "end" not in codeLine:
-    codeLine = tokenizedCode[line].copy()
-    # making sure there is code and its not blank
-    if codeLine[0] != "":
-        # doing the math
-        mathComputed = ComputeMath(codeLine)  # computing math and filling in memory places
-        ComputeMem(mathComputed, line)  # setting memory
-        RunOther(mathComputed)  # running other syntaxes
-    line += 1  # moving the line along
+    try:
+        codeLine = tokenizedCode[line].copy()
+        # making sure there is code and its not blank
+        if codeLine[0] != "":
+            # doing the math
+            mathComputed = ComputeMath(codeLine)  # computing math and filling in memory places
+            ComputeMem(mathComputed, line)  # setting memory
+            RunOther(mathComputed)  # running other syntaxes
+        line += 1  # moving the line along
+    
+    # error handling
+    except KeyError:  # memory errors
+        raise BaseException(f"\n\n\nPossible memory error\nLiklely that the memory accessed was not created\nError on line { line + 1 }\n{ codeLinesOld[line] }\n\n")
+    except BaseException:  # syntax and other errors
+        raise BaseException(f"\n\n\n\nPossilbe syntax error\nError on line { line + 1 }\n{ codeLinesOld[line] }\n\n")
 
 

@@ -1,20 +1,24 @@
 
 
 // creating a function for recursion (2x)
-<6> = func
+<myFunc> = func
     // calling the print function
-    <995> = <1>
-    call <1000>
+    <995> = <inc>
+    call <print>
 
     // waiting a second
     <995> = 250
-    call <1001>
+    call <sleep>
 
     // doubling the value and calling the function
-    <1> = <1> * 2
-    
-    if <1> < 100
-        call <6>
+    <inc> = <inc> * 2
+
+    if <inc> < 1000
+        if <inc> < 100
+            call <myFunc>
+            done
+        <995> = 50
+        call <print>
         done
 
     // ending the function
@@ -22,25 +26,25 @@
 
 
 // setting the initial value and calling the function
-<1> = 1
-call <6>
+<inc> = 1
+call <myFunc>
 
-// setting <5>
-<5> = 0
+// setting <i> to 0
+<i> = 0
 
 // call a print with a value of 99
 <995> = 99
-call <1000>
+call <print>
 
 // waiting a second
 <995> = 250
-call <1001>
+call <sleep>
 
-<5> = <5> + 1  // adding one to it
+<i> = <i> + 1  // adding one to it
 
-// jumping back if <5> < 2
-if <5> <= 1
-    jmp 31
+// jumping back if <i> < 2 (<i> <= 1)
+if <i> <= 1
+    jmp 35
     done
 
 // ending the program
