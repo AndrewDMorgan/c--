@@ -190,7 +190,7 @@ def RunOther(codeLine: list) -> None:
             add = TryInt(GetAdd(codeLine[charNum + 1]))
 
             # making sure the function isnt a built in one
-            if add not in [1000]:
+            if add not in ["sleep", "print"]:
                 # adding the line to the jumps list
                 jmpBack.append(line)
 
