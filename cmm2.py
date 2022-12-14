@@ -21,7 +21,6 @@ retrn         returns to last jump
 end           ends the program
 done          ends an if
 if            an if statement
-
 <print>        print function
 <sleep>        sleep function (milliseconds)
 <995-999>     parameters for built-ins (in order from 995 - 999)
@@ -87,11 +86,19 @@ def TryInt(val: any) -> any:
         return val  # returing the value sense its not an int
 
 
+# trys to make it an int otherwise it makes it a float
+def TryFloatInt(val: any) -> any:
+    try:
+        return int(val)
+    except ValueError:
+        return float(val)
+
+
 # gets the value of an addres or number
 def GetVal(addresVal: int) -> int:
     if addresVal[0] == "<":
         return memory[TryInt(GetAdd(addresVal))]
-    return int(addresVal)
+    return TryFloatInt(addresVal)
 
 
 # computes the math using recursion and also the substitution of memory values in <address>
@@ -170,7 +177,7 @@ def ComputeMem(codeLine: list, lineNum: int) -> None:
                     line += 1
                 line += 1  # going to the line after the retrn
             else:
-                memory[add] = int(codeLine[charNum + 1])
+                memory[add] = TryFloatInt(codeLine[charNum + 1])
         elif token == "if":
             # checking if the if is false
             if not eval(codeLine[charNum + 1]):
@@ -215,5 +222,3 @@ while "end" not in codeLine:
         ComputeMem(mathComputed, line)  # setting memory
         RunOther(mathComputed)  # running other syntaxes
     line += 1  # moving the line along
-
-
