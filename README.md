@@ -3,7 +3,7 @@ c-- is a very interesting language. Like how c++ means c but 1 better, c-- means
 
 # Features
 
-The language uses new lines to identify the ends of lines (like python). It does not use indentation or brakets (although indents can help readibility), instead it uses syntaxes to mark the end of if's and functions. The language only supports int's currently. You use <> and a number/name to represent functions and values (when using no <> its marked as a number).
+The language uses new lines to identify the ends of lines (like python). It does not use indentation or brakets (although indents can help readibility), instead it uses syntaxes to mark the end of if's and functions. The language only supports int's and floats currently (strings possibly coming soon). You use <> and a number/name to represent functions and variables (when using no <> its marked as a number and not an address/variable).
 
  * Basic variables
  * Functions + recurrsion
